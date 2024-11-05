@@ -1,0 +1,19 @@
+ //for ile kullanıcıdan 10 tane sayıyı girdiğinde 50 altı ve 50 üstü kaç olduğunu bulma
+
+        int altindaSayac = 0;
+        int ustundeSayac = 0;
+
+        for (int i = 1; i <= 10; i++) {
+            System.out.print(i + ". sayıyı girin: ");
+            int sayi = oku.nextInt();
+
+            if (sayi < 50) {
+                altindaSayac++;
+            } else {
+                ustundeSayac++;
+            }
+        }
+
+        System.out.println("50'nin altında sayı adedi: " + altindaSayac);
+        System.out.println("50'nin üstünde sayı adedi: " + ustundeSayac);
+        oku.close();

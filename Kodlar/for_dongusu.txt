@@ -1,0 +1,12 @@
+   Scanner oku= new Scanner(System.in);
+            int toplam = 0;
+
+            for (int i = 1; i <= 10; i++) {
+                System.out.print(i + ". sayıyı girin: ");
+                int sayi = oku.nextInt();
+                toplam += sayi;
+            }
+
+            System.out.println("Toplam: " + toplam);
+            oku.close();
+    }

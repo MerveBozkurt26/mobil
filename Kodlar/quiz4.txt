@@ -1,0 +1,12 @@
+ //for ile faktörel hesaplama
+
+           System.out.print("Bir sayı girin: ");
+           int sayi = oku.nextInt();
+           long faktoriyel = 1;
+
+           for (int i = 1; i <= sayi; i++) {
+               faktoriyel *= i;
+           }
+
+           System.out.println(sayi + " sayısının faktöriyeli: " + faktoriyel);
+           oku.close();

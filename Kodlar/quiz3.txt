@@ -1,0 +1,20 @@
+// kullanıcıdan girdiği 2 sayı arasındaki sayıların toplamı
+
+        System.out.print("Birinci sayıyı girin: ");
+        int sayi1 = oku.nextInt();
+
+        System.out.print("İkinci sayıyı girin: ");
+        int sayi2 = oku.nextInt();
+
+        // Sayıları küçükten büyüğe sıralama
+        int min = Math.min(sayi1, sayi2);
+        int max = Math.max(sayi1, sayi2);
+
+        int toplam = 0;
+
+        for (int i = min; i <= max; i++) {
+            toplam += i;
+        }
+
+        System.out.println(min + " ile " + max + " arasındaki sayıların toplamı: " + toplam);
+        oku.close();

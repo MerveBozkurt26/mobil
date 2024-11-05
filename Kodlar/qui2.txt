@@ -1,0 +1,12 @@
+// 1'den kullacının girdiği sayı kadar sayı toplamı
+
+        System.out.print("Bir sayı girin: ");
+        int sayi = oku.nextInt();
+        int toplam = 0;
+
+        for (int i = 1; i <= sayi; i++) {
+            toplam += i;
+        }
+
+        System.out.println("1'den " + sayi + "'ye kadar toplam: " + toplam);
+        oku.close();
