@@ -1,0 +1,21 @@
+     // parametre olarak alınan 2 sayı arasındaki farkı ekrana yazın
+
+        // not: sayıların farkı her zaman pozitif
+
+        // farkHesapla(s1,s2);
+
+        int sonuc = kareAl(3);
+        System.out.println("Sonuc:" + sonuc);
+    }
+
+    public static int kareAl(int sayi) {
+        return sayi * sayi;
+    }
+
+    public static int farkHesapla(int s1, int s2){
+        if(s1>s2){
+            return s1-s2;
+        }
+        else{
+            return s2-s1;
+        }

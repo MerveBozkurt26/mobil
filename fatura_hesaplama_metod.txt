@@ -1,0 +1,72 @@
+public class UcretHesaplama {
+
+    // Ücret hesaplama metodu
+    public static double ucretHesapla(double mesafe) {
+        if (mesafe <= 0) {
+            return 0; // Negatif veya 0 mesafede ücret yok
+        } else if (mesafe <= 200) {
+            return mesafe * 2; // 0 - 200 km: 2 TL/km
+        } else if (mesafe <= 300) {
+            return (200 * 2) + ((mesafe - 200) * 2.5); // 200 - 300 km: 2.5 TL/km
+        } else {
+            return (200 * 2) + (100 * 2.5) + ((mesafe - 300) * 4); // 300+ km: 4 TL/km
+        }
+    }
+
+    public static void main(String[] args) {
+        // Test için örnek mesafeler
+        double mesafe1 = 150;
+        double mesafe2 = 250;
+        double mesafe3 = 350;
+
+        // Ücretleri hesapla ve yazdır
+        System.out.println("Mesafe: " + mesafe1 + " km, Ücret: " + ucretHesapla(mesafe1) + " TL");
+        System.out.println("Mesafe: " + mesafe2 + " km, Ücret: " + ucretHesapla(mesafe2) + " TL");
+        System.out.println("Mesafe: " + mesafe3 + " km, Ücret: " + ucretHesapla(mesafe3) + " TL");
+    }
+}
+
+public class PriceCalculator {
+
+    // Fiyat hesaplama metodu
+    public static double fiyatHesapla(int miktar) {
+        double fiyat = 0.0;
+
+        // 0 ile 200 arasındaki miktar için 2 TL
+        if (miktar >= 0 && miktar <= 200) {
+            fiyat = miktar * 2.0;
+        }
+        // 200 ile 300 arasındaki miktar için 2.5 TL
+        else if (miktar > 200 && miktar <= 300) {
+            fiyat = miktar * 2.5;
+        }
+        // 300'ün üzerindeki miktar için 4 TL
+        else if (miktar > 300) {
+            fiyat = miktar * 4.0;
+        }
+
+        return fiyat;  // Hesaplanan fiyatı döndür
+    }
+
+    public static void main(String[] args) {
+        // Örnek miktarlar
+        int miktar1 = 150;
+        int miktar2 = 250;
+        int miktar3 = 350;
+
+        // Fiyatları hesapla ve ekrana yazdır
+        System.out.println(miktar1 + " birim için fiyat: " + fiyatHesapla(miktar1) + " TL");
+        System.out.println(miktar2 + " birim için fiyat: " + fiyatHesapla(miktar2) + " TL");
+        System.out.println(miktar3 + " birim için fiyat: " + fiyatHesapla(miktar3) + " TL");
+    }
+}
+
+
+
+
+
+
+
+
+
+

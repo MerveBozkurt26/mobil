@@ -1,0 +1,6 @@
+   int sonuc =kareAl(3);
+        System.out.println("Sonuc:"+sonuc);
+    }
+    public static int kareAl(int sayi){
+        return sayi * sayi;
+    }
