@@ -1,0 +1,67 @@
+  CheckBox chbCorba,chbKofte, chbLahmacun, chbPilav, chbSutlac;
+
+    Button buttonSiparis;
+
+    TextView tvOzet;
+
+    EditText etcorbaAdet,etkofteAdet,etlahmacunAdet,etpilavAdet,etsutlacAdet;
+
+
+  chbCorba=findViewById(R.id.checkBox_corba);
+        chbKofte=findViewById(R.id.checkBox_kofte);
+        chbLahmacun=findViewById(R.id.checkBox_lahmacun);
+        chbPilav=findViewById(R.id.checkBox_pilav);
+        chbSutlac=findViewById(R.id.checkBox_sutlac);
+        buttonSiparis=findViewById(R.id.button_siparis);
+        tvOzet=findViewById(R.id.textView_ozet);
+        etcorbaAdet=findViewById(R.id.editTextNumber_corbaAdet);
+        etkofteAdet=findViewById(R.id.editTextNumber_kofteAdet);
+        etlahmacunAdet=findViewById(R.id.editTextNumber_lahmacunAdet);
+        etpilavAdet=findViewById(R.id.editTextNumber_pilavAdet);
+        etsutlacAdet=findViewById(R.id.editTextNumber_sutlacAdet);
+
+        buttonSiparis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                float corbaFiyat=50, kofteFiyat=100, lahmacunFiyat=200, pilavFiyat=75 , sutlacFiyat=65;
+
+                float toplamTutar=0;
+
+                String s="Sipariş Özeti\n---------------\n";
+
+                if(chbCorba.isChecked()){
+
+                    toplamTutar+=corbaFiyat;
+
+                    s+="Çorba\n";
+
+                    if(chbKofte.isChecked()){
+
+                        toplamTutar+=kofteFiyat;
+
+                        s+="Köfte\n";
+                    }
+
+                    if(chbLahmacun.isChecked()){
+
+                        toplamTutar+=lahmacunFiyat;
+
+                        s+="Lahmacun\n";
+                    }
+
+                    if(chbPilav.isChecked()){
+
+                        toplamTutar+=pilavFiyat;
+
+                        s+="Pilav\n";
+                    }
+
+                    if(chbSutlac.isChecked()){
+
+                        toplamTutar+=sutlacFiyat;
+
+                        s+="Sütlaç\n";
+
+                        tvOzet.setText(s+"------------Toplam Tutar:"+toplamTutar);
+                    }
