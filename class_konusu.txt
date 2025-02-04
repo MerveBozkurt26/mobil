@@ -1,0 +1,47 @@
+** CLASS **
+
+Linerlayout vertical et number button tv
+
+marginHorizontal=10dp, marginTop=16dp, marginTop=20dp, 
+
+textler;
+
+Cihaz Adı, Cihaz Gücü, Günlük Kullanım Saati, Aylık Tüketim:
+
+**ElektrikliCihaz**
+
+public String cihazAdi;
+public double cihazGucu;
+public double gunlukKullanimSaati;
+
+public double aylikTuketim(){
+
+   double aylikKullanim;
+   aylikKullanim=cihazGucu*gunlukKulllanimSaati*30*2.07;
+   return aylikKullanim;
+}
+
+** Main **
+
+etCihazAdi; etCihazGucu; etSaat; buttonHesapla; tvTuketim;
+
+        etCihazAdi=findViewById(R.id.editText_cihaz_adi);
+        etCihazGucu=findViewById(R.id.editText_cihaz_gucu);
+        etSaat=findViewById(R.id.editText_gunluk_kullanilan_saat);
+        buttonHesapla=findViewById(R.id.button_hesapla);
+        tvTuketim=findViewById(R.id.textView_tuketim);
+
+buttonHesapla{
+
+ String cihazAdi = etCihazAdi.getText().toString();
+                double cihazGucu = Double.parseDouble(etCihazGucu.getText().toString());
+                double saat = Double.parseDouble(etSaat.getText().toString());
+
+                ElektrikliCihaz cihaz = new ElektrikliCihaz();{
+
+                    cihaz.cihazAdi=cihazAdi;
+                    cihaz.gunlukKullanimSaati=saat;
+                    cihaz.cihazGucu=cihazGucu;
+                   double sonuc=cihaz.aylikTuketim();
+                   tvTuketim.setText("Aylık Tüketim" +sonuc);
+                }

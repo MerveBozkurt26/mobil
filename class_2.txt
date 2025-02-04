@@ -1,0 +1,102 @@
+**Class 2 **
+
+public class Bilgisayar {
+
+    // Sınıfın özellikleri (fields)
+    private String marka;
+    private int ram;
+    private double ekranBoyutu;
+
+    // Yapıcı (constructor)
+    public Bilgisayar(String marka, int ram, double ekranBoyutu) {
+        this.marka = marka;
+        this.ram = ram;
+        this.ekranBoyutu = ekranBoyutu;
+    }
+
+    // Getter ve Setter metodları
+    public String getMarka() {
+        return marka;
+    }
+
+    public void setMarka(String marka) {
+        this.marka = marka;
+    }
+
+    public int getRam() {
+        return ram;
+    }
+
+    public void setRam(int ram) {
+        this.ram = ram;
+    }
+
+    public double getEkranBoyutu() {
+        return ekranBoyutu;
+    }
+
+    public void setEkranBoyutu(double ekranBoyutu) {
+        this.ekranBoyutu = ekranBoyutu;
+    }
+
+    // Bilgisayar bilgilerini yazdıran metot
+    public void bilgisayarBilgisi() {
+        System.out.println("Marka: " + marka);
+        System.out.println("RAM: " + ram + " GB");
+        System.out.println("Ekran Boyutu: " + ekranBoyutu + " inç");
+    }
+} EditText etAnakart;
+
+    EditText etIslemci;
+
+    EditText etRAM;
+
+    EditText etHDD;
+
+    EditText etEkranKartı;
+
+    Button buttonHesapla;
+
+    TextView tvBilgi;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        etAnakart = findViewById(R.id.editText_anakart);
+        etIslemci = findViewById(R.id.editText_islemci);
+        etRAM = findViewById(R.id.editText_RAM);
+        etHDD = findViewById(R.id.editText_HDD);
+        etEkranKartı = findViewById(R.id.editText_ekran_karti);
+        buttonHesapla = findViewById(R.id.button_hesapla);
+
+        Bilgisayar bilgisayar = new Bilgisayar("Lenovo", 16, 15.6);
+        bilgisayar.bilgisayarBilgisi();
+
+        buttonHesapla.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String cihazAdi = etAnakart.getText().toString();
+                double cihazGucu = Double.parseDouble(etIslemci.getText().toString());
+                double saat = Double.parseDouble(etEkranKartı.getText().toString());
+
+                ElektrikliCihaz cihaz = new ElektrikliCihaz();
+                {
+
+                    cihaz.cihazAdi = cihazAdi;
+                    cihaz.gunlukKullanimSaati = saat;
+                    cihaz.cihazGucu = cihazGucu;
+                    double sonuc = cihaz.aylikTuketim();
+                    tvBilgi.setText("Aylık Tüketim" + sonuc);
+                }
+            }
+        });
+    }
+}
