@@ -1,0 +1,175 @@
+// ARABA //
+
+** Araba **
+
+public class Araba {
+    private String marka;
+    private String model;
+    private int anlikHiz;
+    private int sonHiz;
+    private boolean calisiyorMu;
+
+    public String getMarka() {
+        return marka;
+    }
+
+    public void setMarka(String marka) {
+        this.marka = marka;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public int getAnlikHiz() {
+        return anlikHiz;
+    }
+
+    public void setAnlikHiz(int anlikHiz) {
+        if (anlikHiz<=0) {
+            this.anlikHiz = anlikHiz;
+        }
+        else if (anlikHiz>sonHiz){
+        this.anlikHiz=sonHiz;
+        }
+        else{
+            this.anlikHiz=anlikHiz;
+        }
+
+    }
+
+    public int getSonHiz() {
+        return sonHiz;
+    }
+
+    public void setSonHiz(int sonHiz) {
+        this.sonHiz = sonHiz;
+    }
+
+    public boolean isCalisiyorMu() {
+        return calisiyorMu;
+    }
+
+    public void setCalisiyorMu(boolean calisiyorMu) {
+        this.calisiyorMu = calisiyorMu;
+
+    }
+
+    public Araba(String marka, String model, int sonHiz) {
+        this.marka = marka;
+        this.model = model;
+        this.sonHiz = sonHiz;
+        this.anlikHiz = 0;
+        this.calisiyorMu = false;
+
+    }
+
+    public String calistir(){
+        if (calisiyorMu){
+            return "Araba zaten çalışıyor";
+        }
+        calisiyorMu=true;
+        return "araba çalışıyor";
+    }
+
+    public String durdur(){
+        if (anlikHiz>0){
+            return "araba hızı"+anlikHiz+"km/h olduğu için durudrulmadı";
+        }
+        if (calisiyorMu){
+            calisiyorMu=false;
+            return "araba durduruldu";
+        }
+        else{
+            return "araba zaten durdurulmuş";
+        }
+    }
+
+    public void hizlan(int hiz){
+        if (calisiyorMu){
+            setAnlikHiz(anlikHiz+hiz);
+        }
+    }
+
+    public void yavasla( int hiz){
+        if (calisiyorMu){
+            setAnlikHiz(anlikHiz-hiz);
+        }
+    }
+}
+
+
+** MAIN **
+
+ private Button btnCalistir, btnYavasla, btnHizlan, btnDurdur;
+
+    private TextView tvDurum;
+
+    private Araba araba;
+
+    String durum="";
+
+
+ @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        araba=new Araba("Toyota", "Carolla", 228);
+        durum="durum:\n"+araba.getMarka()+"\n"+araba.getModel()+"\n"+araba.getSonHiz()+"\n";
+
+
+        btnCalistir=findViewById(R.id.button_calistir);
+        btnYavasla=findViewById(R.id.button_yavasla);
+        btnHizlan=findViewById(R.id.button_hizlan);
+        btnDurdur=findViewById(R.id.button_durdur);
+        tvDurum=findViewById(R.id.textView_durum);
+
+        btnCalistir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                tvDurum.setText(durum+araba.calistir());
+            }
+        });
+
+        btnYavasla.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                araba.yavasla(19);
+                tvDurum.setText(durum+"arabanın hızı:"+araba.getAnlikHiz()+"km/h");
+
+            }
+        });
+
+        btnHizlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                araba.hizlan(20);
+                tvDurum.setText(durum+"arabanın hızı:"+araba.getAnlikHiz()+"km/h");
+            }
+        });
+
+        btnDurdur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                tvDurum.setText(durum+araba.durdur());
+            }
+        });
+
+
+    }
+}
