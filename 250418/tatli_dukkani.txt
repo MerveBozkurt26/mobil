@@ -1,0 +1,186 @@
+XML-
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/editText_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editText_ad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/button_gonder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="GÖNDER" />
+
+</LinearLayout>
+
+MAIN-
+
+ Button buttonGonder;
+  buttonGonder=findViewById(R.id.button_gonder);
+        Urun u1 = new Urun(1,"Trileçe",100,400,true);
+        Intent intent = new Intent(this, UrunDetayActivity.class);
+        intent.putExtra("gindenUrun",u1);
+
+        buttonGonder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intent);
+            }
+        });
+    }
+
+- URUNDETAY-
+
+XML-
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UrunDetayActivity">
+
+    <TextView
+        android:id="@+id/textView_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="sans-serif-black"
+        android:text="ID" />
+
+    <TextView
+        android:id="@+id/textView_ad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="sans-serif-black"
+        android:text="AD" />
+
+    <TextView
+        android:id="@+id/textView_miktar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:layout_margin="10dp"
+        android:text="MIKTAR" />
+
+    <TextView
+        android:id="@+id/textView_fiyat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="sans-serif-black"
+        android:text="FIYAT" />
+
+    <Switch
+        android:id="@+id/switch_durum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="sans-serif-black"
+        android:text="DURUM" />
+</LinearLayout>
+
+MAIN-
+
+ TextView tvId, tvAd, tvMiktar, tvFiyat;
+   
+ Switch switchDurum;
+
+   setContentView(R.layout.activity_urun_detay);
+        tvId=findViewById(R.id.textView_id);
+        tvAd=findViewById(R.id.textView_ad);
+        tvMiktar=findViewById(R.id.textView_miktar);
+        tvFiyat=findViewById(R.id.textView_fiyat);
+        switchDurum=findViewById(R.id.switch_durum);
+
+        Intent intent= getIntent();
+        Urun gelenUrun=(Urun)intent.getSerializableExtra("gidenUrun");
+        tvId.setText("Ürün Id:"+gelenUrun.getId());
+        tvAd.setText("Ürün Id:"+gelenUrun.getAd());
+        tvMiktar.setText("Ürün Id:"+gelenUrun.getStokMiktari());
+        tvFiyat.setText("Ürün Id:"+gelenUrun.getFiyat());
+        switchDurum.setText("Ürün Id:"+gelenUrun.isStokDurum());
+
+    }
+
+-JAVA-
+
+public class Urun  implements Serializable {
+    int id;
+    String ad;
+    int stokMiktari;
+    double fiyat;
+    boolean stokDurum;
+
+    public Urun(int id, String ad, int stokMiktari, double fiyat, boolean stokDurum) {
+        this.id = id;
+        this.ad = ad;
+        this.stokMiktari = stokMiktari;
+        this.fiyat = fiyat;
+        this.stokDurum = stokDurum;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getAd() {
+        return ad;
+    }
+
+    public void setAd(String ad) {
+        this.ad = ad;
+    }
+
+    public int getStokMiktari() {
+        return stokMiktari;
+    }
+
+    public void setStokMiktari(int stokMiktari) {
+        this.stokMiktari = stokMiktari;
+    }
+
+    public double getFiyat() {
+        return fiyat;
+    }
+
+    public void setFiyat(double fiyat) {
+        this.fiyat = fiyat;
+    }
+
+    public boolean isStokDurum() {
+        return stokDurum;
+    }
+
+    public void setStokDurum(boolean stokDurum) {
+        this.stokDurum = stokDurum;
+    }
+}

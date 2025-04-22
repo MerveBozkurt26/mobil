@@ -1,0 +1,65 @@
+Main 2
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity2">
+
+  <TextView
+      android:id="@+id/textView_ad"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:baselineAligned="false"
+      android:text="TextView" />
+
+  <TextView
+      android:id="@+id/textView_soyad"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="TextView" />
+
+  <TextView
+      android:id="@+id/textView_eposta"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="TextView" />
+
+  <Button
+      android:id="@+id/button_anasayfa"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Button" />
+</LinearLayout>
+
+ private TextView tvAd, tvSoyad, tvEposta;
+
+  private Button btnAnasayfa;
+
+ tvAd=findViewById(R.id.textView_ad);
+        tvSoyad=findViewById(R.id.textView_eposta);
+        tvEposta=findViewById(R.id.textView_eposta);
+        btnAnasayfa=findViewById(R.id.button_anasayfa);
+
+        Intent intent=getIntent();
+
+        String ad=intent.getStringExtra("ad");
+        String soyad=intent.getStringExtra("soyad");
+        String eposta=intent.getStringExtra("eposta");
+
+        tvAd.setText(ad);
+        tvSoyad.setText(soyad);
+        tvEposta.setText(eposta);
+
+
+        btnAnasayfa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1=new Intent(MainActivity2.this, MainActivity.class);
+                startActivity(intent1);
+            }
+        });

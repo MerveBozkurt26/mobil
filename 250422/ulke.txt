@@ -1,0 +1,163 @@
+// ACTIVITY//
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    >
+
+    <ListView
+        android:id="@+id/lv_ulkeler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
+
+// LISTVIEW_SATIR//
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_bayrak"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/turkiye" />
+
+    <TextView
+        android:id="@+id/tv_ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-black"
+        android:text="AD"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_bayrak"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_baskent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Başkent"
+        app:layout_constraintStart_toStartOf="@+id/tv_ad"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ad" />
+
+    <TextView
+        android:id="@+id/tv_nufus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Nüfus"
+        app:layout_constraintStart_toStartOf="@+id/tv_baskent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_baskent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+// ULKELERADAPTER JAVA//
+
+public class UlkelerAdapter extends BaseAdapter {
+
+    ArrayList<Ulke> liste;
+    Context context;
+    public UlkelerAdapter(ArrayList<Ulke> liste, Context context){
+        this.liste= liste;
+        this.context=context;
+    }
+
+
+
+    @Override
+    public int getCount() {
+        return liste.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return liste.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        TextView  tvAd, tvBaskent,tvNufus;
+        ImageView ivBayrak;
+
+        Ulke ulke= liste.get(i);
+        if (view==null){
+            view= LayoutInflater.from(context).inflate(R.layout.listview_satir,viewGroup,false);
+        }
+        ivBayrak=view.findViewById(R.id.iv_bayrak);
+        tvAd=view.findViewById(R.id.tv_ad);
+        tvBaskent=view.findViewById(R.id.tv_baskent);
+        tvNufus=view.findViewById(R.id.tv_nufus);
+
+        tvAd.setText(ulke.getAd());
+        tvBaskent.setText(ulke.getBaskent());
+        tvNufus.setText("Nüfus:"+String.valueOf(ulke.getNufus()));
+        ivBayrak.setImageResource(ulke.getBayrak());
+
+
+        return view;
+    }
+}
+
+//ULKE JAVA//
+
+    int bayrak;
+    String ad;
+    String baskent;
+    int nufus;
+    String paraBirimi;
+    String dil;
+    String telefonKodu;
+    String aciklama;
+
+// MAIN//
+
+public class MainActivity extends AppCompatActivity {
+    ArrayList<Ulke> ulkeler;
+    ListView lvUlkeler;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        ulkeler=new ArrayList<>();
+
+        lvUlkeler=findViewById(R.id.lv_ulkeler);
+        ulkeler.add(new Ulke(R.drawable.turkiye,"Türkiye","Ankara",80000000,"TL","Türkçe","+90",getString(R.string.tr_aciklama)));
+        ulkeler.add(new Ulke(R.drawable.japonya,"Japonya","Tokyo",141100000,"Yen","Japonca","+81",getString(R.string.jp_aciklama)));
+        ulkeler.add(new Ulke(R.drawable.cin,"Çin","Pekin",80000000,"RMB","Çince","+86",getString(R.string.cin_aciklama)));
+        ulkeler.add(new Ulke(R.drawable.abd,"ABD","Washington",34000000,"Euro","İngilizce","+1",getString(R.string.abd_aciklama)));
+        ulkeler.add(new Ulke(R.drawable.almanya,"Almanya","Berlin",83000000,"Euro","Türkçe","+49",getString(R.string.almanya_aciklama)));
+
+        UlkelerAdapter adapter= new UlkelerAdapter(ulkeler,this);
+        lvUlkeler.setAdapter(adapter);
+    }
+
+
+}
