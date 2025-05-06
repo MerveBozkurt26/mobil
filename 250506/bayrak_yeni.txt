@@ -1,0 +1,235 @@
+// MAIN XML //
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ListView
+        android:id="@+id/lv_ulkeler"
+        android:layout_width="match_parent"
+        android:dividerHeight="10dp"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
+
+// SATIR XML //
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_satir_bayrak"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/turkiye" />
+
+    <TextView
+        android:id="@+id/tv_satir_ad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:text="Ulke Ad" />
+
+    <TextView
+        android:id="@+id/tv_satir_baskent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:text="Baskent" />
+
+    <TextView
+        android:id="@+id/tv_satir_nufus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:text="Nufus" />
+</LinearLayout>
+
+
+// DETAIL ACTIVITY XML //
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailActivity">
+
+    <ImageView
+        android:id="@+id/iv_detail_bayrak"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/turkiye" />
+
+    <TextView
+        android:id="@+id/tv_detail_ad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="Ulke" />
+
+    <TextView
+        android:id="@+id/tv_aciklama"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:text="Açıklama" />
+</LinearLayout>
+
+
+// MAIN JAVA // 
+
+ ListView lv_ulkeler;
+
+    ArrayList<Ulke> liste;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        lv_ulkeler=findViewById(R.id.lv_ulkeler);
+
+        liste=new ArrayList<>();
+        liste.add(new Ulke(R.drawable.turkiye,"Türkiye","Ankara",80000000,getString(R.string.tr_aciklama)));
+        liste.add(new Ulke(R.drawable.japonya,"Japonya","Tokyo",141100000,getString(R.string.jp_aciklama)));
+        liste.add(new Ulke(R.drawable.cin,"Çin","Pekin",80000000,getString(R.string.cin_aciklama)));
+        liste.add(new Ulke(R.drawable.abd,"ABD","Washington",34000000,getString(R.string.abd_aciklama)));
+        liste.add(new Ulke(R.drawable.almanya,"Almanya","Berlin",83000000,getString(R.string.almanya_aciklama)));
+
+        UlkeAdapter adapter=new UlkeAdapter(this,liste);
+        lv_ulkeler.setAdapter(adapter);
+
+        lv_ulkeler.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Ulke secilenUlke=liste.get(i);
+                Intent intent=new Intent(MainActivity.this,DetailActivity.class);
+                intent.putExtra("secilenUlke",secilenUlke);
+                startActivity(intent);
+
+            }
+        });
+    }
+}
+
+
+// ULKE JAVA //
+
+     int bayrak;
+     String ad;
+     String baskent;
+     int nufus;
+     String aciklama;
+
+
+
+// ULKE ADAPTER JAVA //
+
+public class UlkeAdapter extends BaseAdapter {
+
+    Context context;
+    ArrayList<Ulke> ulkeler;
+
+    public UlkeAdapter (Context context,ArrayList<Ulke> ulkeler){
+
+        this.context=context;
+        this.ulkeler=ulkeler;
+
+    }
+
+
+    @Override
+    public int getCount() {
+        return ulkeler.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return ulkeler.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+
+     ImageView iv_Satirbayrak;
+     TextView tv_Satirad,tv_Satirbaskent,tv_Satirnufus;
+     Ulke ulke=ulkeler.get(i);
+     if (view==null){
+         view=View.inflate(context,R.layout.satir,null);
+     }
+
+     iv_Satirbayrak=view.findViewById(R.id.iv_satir_bayrak);
+     tv_Satirad=view.findViewById(R.id.tv_satir_ad);
+     tv_Satirbaskent=view.findViewById(R.id.tv_satir_baskent);
+     tv_Satirnufus=view.findViewById(R.id.tv_satir_nufus);
+
+     iv_Satirbayrak.setImageResource(ulke.getBayrak());
+     tv_Satirad.setText(ulke.getAd());
+     tv_Satirbaskent.setText(ulke.getBaskent());
+     tv_Satirnufus.setText("Nufus"+ulke.getNufus());
+
+        return view;
+    }
+}
+
+
+// DETAIL JAVA // 
+
+ ImageView ivDetailbayrak;
+    TextView tvAd,tvAciklama;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_detail);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        ivDetailbayrak=findViewById(R.id.iv_detail_bayrak);
+        tvAd=findViewById(R.id.tv_detail_ad);
+        tvAciklama=findViewById(R.id.tv_aciklama);
+
+        Ulke ulke=(Ulke) getIntent().getSerializableExtra("secilenUlke");
+
+        if (ulke!=null){
+            ivDetailbayrak.setImageResource(ulke.getBayrak());
+            tvAd.setText(ulke.getAd());
+            tvAciklama.setText(ulke.getAciklama());
+        }
+
+    }
+}
