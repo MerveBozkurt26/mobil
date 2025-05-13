@@ -1,0 +1,277 @@
+** ACTIVITY MAIN XML **
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ListView
+        android:id="@+id/lv_filmler"
+        android:layout_width="match_parent"
+        android:dividerHeight="10dp"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
+
+-------------------------------------------------------
+** SATIR XML **
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_resim"
+        android:layout_width="304dp"
+        android:layout_height="180dp"
+        android:layout_weight="1"
+        tools:srcCompat="@drawable/kungfu_panda" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_ad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="Film adı" />
+
+        <TextView
+            android:id="@+id/tv_yil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="yıl" />
+
+        <TextView
+            android:id="@+id/tv_yonetmen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="yönetmen" />
+    </LinearLayout>
+</LinearLayout>
+----------------------------------------------------
+
+** ACTIVITY DETAIL XML **
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-75dp"
+        tools:layout_editor_absoluteY="-47dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_detail_resim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                app:srcCompat="@drawable/kungfu_panda" />
+
+            <TextView
+                android:id="@+id/tv_detail_ad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="36dp"
+                android:text="Film adı"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_konu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="44dp"
+                android:text="Konusu"
+                android:textSize="15sp">
+
+            </TextView>
+
+                  <RatingBar
+            android:id="@+id/rgb_puan"
+            android:layout_marginTop="36dp"
+            android:layout_width="379dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+                      android:layout_gravity="center_horizontal"
+            tools:layout_editor_absoluteY="400dp" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+-------------------------------------------------------
+
+** FILM JAVA **
+
+ int resim;
+    String ad;
+    int yil;
+    String yonetmen;
+    String konu;
+    float puan;
+----------------------------------------------------
+** FILM ADAPTER JAVA **
+
+Context context;
+    ArrayList<Film> filmler;
+
+        public FilmAdapter(Context context, ArrayList<Film> filmler) {
+            this.context = context;
+            this.filmler = filmler;
+        }
+
+        @Override
+        public int getCount() {
+            return filmler.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return filmler.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup parent) {
+
+            ImageView ivDetailResim;
+            TextView tvDetailAd, tvDetailYil, tvDetailYonetmen;
+
+            if (view == null) {
+                view = View.inflate(context, R.layout.satir, null);
+            }
+
+
+            ImageView ivSatirResim = view.findViewById(R.id.iv_detail_resim);
+            TextView tvSatirAd = view.findViewById(R.id.tv_ad);
+            TextView tvSatirYil = view.findViewById(R.id.tv_yil);
+            TextView tvSatirYonetmen = view.findViewById(R.id.tv_yonetmen);
+
+
+            Film film = filmler.get(i);
+
+            ivSatirResim.setImageResource(film.getResim());
+            tvSatirAd.setText(film.getAd());
+            tvSatirYil.setText(String.valueOf(film.getYil()));
+            tvSatirYonetmen.setText(String.valueOf(film.getYonetmen()));
+            return view;
+        }
+    }
+----------------------------------------------------
+** DETAIL JAVA **
+ ImageView ivDetailresim;
+    TextView tvDetailAd,tvDetailKonu;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_detail);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        ivDetailresim = findViewById(R.id.iv_detail_resim);
+        tvDetailAd = findViewById(R.id.tv_detail_ad);
+        tvDetailKonu = findViewById(R.id.tv_konu);
+
+
+        Film film=(Film) getIntent().getSerializableExtra("secilenUlke");
+
+        if (film!=null){
+            ivDetailresim.setImageResource(film.getResim());
+            tvDetailAd.setText(film.getAd());
+            tvDetailKonu.setText(film.getKonu());
+        }
+    }
+}
+-------------------------------------------------
+
+** MAIN JAVA **
+
+ ImageView ivDetailresim;
+    TextView tvDetailAd,tvDetailKonu;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_detail);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        ivDetailresim = findViewById(R.id.iv_detail_resim);
+        tvDetailAd = findViewById(R.id.tv_detail_ad);
+        tvDetailKonu = findViewById(R.id.tv_konu);
+
+
+        Film film=(Film) getIntent().getSerializableExtra("secilenUlke");
+
+        if (film!=null){
+            ivDetailresim.setImageResource(film.getResim());
+            tvDetailAd.setText(film.getAd());
+            tvDetailKonu.setText(film.getKonu());
+        }
+    }
+}
+------------------------------------------------------
+** STRING XML **
+
+<string name="kungfu_panda_konusu">Panda Po, kung fu hayranıdır. Ancak ailesine ait makarna restoranında çalışır ve bu spora pek yatkın sayılmaz. Hiç beklemediği bir anda eski bir kehanetin gereğini yerine getirmek için görevlendirilince Po\'nun hayalleri gerçeğe dönüşür. O artık efsanevi Korkusuz Beşli\'nin yanında kung fu dünyasına katılmıştır.</string>
+    <string name="buz_devri_konusu">Buz Devri, Dünya\'nın buzla kaplanmaya başladığı dönemde, Buzul Çağı\'nda bir mamut, bir kılıç dişli kaplan, bir miskin ve bir bebeğin maceralarını anlatıyor.</string>
+    <string name="jumanji_konusu">Yeni Seviye (İngilizce özgün adıyla Jumanji: The Next Level), yönetmenliğini Jake Kasdan\'in yaptığı, başrollerini Dwayne Johnson, Jack Black, Kevin Hart, Karen Gillan, Nick Jonas, Awkwafina, Danny DeVito ve Danny Glover\'ın paylaştığı bir Amerikan fantastik-macera filmi. 2017 yılında vizyona giren Jumanji: Vahşi Orman’ın devamıdır.</string>
+    <string name="iron_man_konusu">Iron Man (Türkçe: Demir Adam), 2008 yapımı, Marvel Comics Şirketi\'nin yayımladığı ilk Marvel Sinematik Evreni filmidir. Demir Adam isimli çizgi romanın beyazperde uyarlamasıdır. Robert Downey Jr., filmin kahramanı Demir Adam\'ı canlandırmıştır. Filmde oyuncuya Terrence Howard, Gwyneth Paltrow ve Jeff Bridges eşlik ediyor. Filmin devamı 2010 yılında gösterime girdi ve başrolde yine Robert Downey Jr. oynadı.</string>
+    <string name="king_arthur_konusu">Kral Arthur, daha önce birçok kez sinemaya aktarılan Kral Arthur ve Yuvarlak Masa Şövalyeleri efsanesinin dijital efektlerle güçlendirilmiş bir yeniden anlatım filmidir. Filmin başlangıcında, son yıllarda elde edilen arkeolojik bulguların ışığında konuya daha farklı yaklaşıldığı belirtilir. Filmin başrollerinde Clive Owen, Ioan Gruffudd, Keira Knightley oynamaktadır.</string>
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
